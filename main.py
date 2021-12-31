@@ -9,5 +9,16 @@ driver.switch_to.frame(0)
 
 #getting puzzle info
 page = soup(driver.page_source, features="html.parser")
-print(page.find("table", {"id":"puzzle_grid"}))
+sudoku = page.find("table", {"id":"puzzle_grid"})
+rows = sudoku.find_all("tr")
+
+#saving each value in a matrix
+matrix = []
+for row in range(len(rows)):
+    matrix.append([])
+    for col in rows[row].find_all("td"):
+        try:
+            matrix[row].append(col.input["value"])
+        except:
+            matrix[row].append(".")
 driver.close()
