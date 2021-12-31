@@ -1,10 +1,8 @@
 from collections import deque
 from typing import List
 class Solution:
-    def solveSudoku(self, board: List[List[str]]) -> None:
-        """
-        Do not return anything, modify board in-place instead.
-        """
+    def solve_sudoku(self, board: List[List[str]]) -> None:
+        """Solves a sudoku board."""
         #declaring variables
         empty_spaces = deque()
         possible_nums = {}
@@ -47,5 +45,5 @@ class Solution:
                     else:
                         board[r][c] = "."
             return False
-    
+
         backtrack()

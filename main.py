@@ -1,6 +1,6 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup as soup
-from time import sleep
+from my_leetcode_solution import Solution
 
 #initializing the webdriver
 driver = webdriver.Chrome()
@@ -21,4 +21,7 @@ for row in range(len(rows)):
             matrix[row].append(col.input["value"])
         except:
             matrix[row].append(".")
+
+solution = Solution()
+solution.solve_sudoku(matrix)
 driver.close()
