@@ -17,6 +17,7 @@ class Sudoku(tk.Frame):
         
         self._drawGrid()
         self.canvas.bind("<Button-1>", self._click)
+        self.canvas.bind("<Key>", self._key)
         
     def _drawGrid(self):
         for i in range(10):
