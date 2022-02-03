@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import tkinter as tk
 
-class Application(tk.Frame):    
+class Sudoku(tk.Frame):    
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         self.grid()
@@ -20,6 +20,6 @@ class Application(tk.Frame):
             self.canvas.create_line(i*(self.width/9), 0, i*(self.width/9), self.height, fill=color)
             self.canvas.create_line(0, i*(self.height/9), self.width, i*(self.height/9), fill=color)
         
-app = Application()
+app = Sudoku()
 app.master.title("Sudoku")
 app.mainloop()
