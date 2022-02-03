@@ -10,7 +10,7 @@ class Sudoku(tk.Frame):
         self.side = 60 
         self.width = self.height = self.margin * 2 + self.side * 9
         self.nums = set()
-        for i in range(1, 10):
+        for i in range(10):
             self.nums.add(str(i))
         self.board = [[".", ".", ".", ".", ".", ".", ".", ".", "."] for i in range(9)]
         self.solver = Solution()
@@ -24,6 +24,8 @@ class Sudoku(tk.Frame):
         self.canvas.pack(fill=tk.BOTH, side=tk.TOP)
         self.solve_button = tk.Button(self, text="Solve", command=self._solve)
         self.solve_button.pack(fill=tk.BOTH, side=tk.BOTTOM)
+        self.clear_button = tk.Button(self, text="Clear Answers", command=self._clear)
+        self.clear_button.pack(fill=tk.BOTH, side=tk.BOTTOM)
         
         self._drawGrid()
         self._drawSudoku()
@@ -61,10 +63,16 @@ class Sudoku(tk.Frame):
     def _key(self, event):
         if self.row != -1 and self.col != -1 and event.char in self.nums:
             self.board[self.row][self.col] = event.char
+            if event.char == "0":
+                self.board[self.row][self.col] = "."
             self._drawSudoku()
     
     def _solve(self):
         self.solver.solve_sudoku(self.board)
+        self._drawSudoku()
+        
+    def _clear(self):
+        self.board = [[".", ".", ".", ".", ".", ".", ".", ".", "."] for i in range(9)]
         self._drawSudoku()
         
 app = Sudoku()
