@@ -43,6 +43,7 @@ class Sudoku(tk.Frame):
                     
     def _click(self, event):
         if (self.margin < event.x < self.width - self.margin and self.margin < event.y < self.height - self.margin):
+            self.canvas.focus_set()
             row, col = int((event.y - self.margin) / self.side), int((event.x - self.margin) / self.side)
             if (self.row, self.col) == (row, col):
                 self.row = self.col = -1
