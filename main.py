@@ -12,7 +12,7 @@ class Sudoku(tk.Frame):
         for i in range(1, 10):
             self.nums.add(str(i))
         self.board = [[".", ".", ".", ".", ".", ".", ".", ".", "."] for i in range(9)]
-            
+        
         tk.Frame.__init__(self, master)
         self.grid()
         self.createWidgets()
@@ -22,6 +22,7 @@ class Sudoku(tk.Frame):
         self.canvas.pack(fill=tk.BOTH, side=tk.TOP)
         
         self._drawGrid()
+        
         self.canvas.bind("<Button-1>", self._click)
         self.canvas.bind("<Key>", self._key)
         
@@ -32,8 +33,8 @@ class Sudoku(tk.Frame):
             self.canvas.create_line(self.margin, self.margin+i*(self.side), self.width-self.margin, self.margin+i*(self.side), fill=color)
     
     def _click(self, event):
-        if (self.margin < self.x < self.width - self.margin and self.margin < self.y < self.height - self.margin):
-            row, col = (event.y - self.margin) / self.side, (event.x - self.margin) / self.side
+        if (self.margin < event.x < self.width - self.margin and self.margin < event.y < self.height - self.margin):
+            row, col = int((event.y - self.margin) / self.side), int((event.x - self.margin) / self.side)
             if (self.row, self.col) == (row, col):
                 self.row = self.col = -1
             else:
@@ -43,9 +44,9 @@ class Sudoku(tk.Frame):
             self.row = self.col = -1
     
     def _key(self, event):
-        if self.row != 1 and self.col != 1 and event.char in self.nums:
-            self.row = self.col = -1
+        if self.row > 0 and self.col > 0 and event.char in self.nums:
             self.board[self.row][self.col] = event.char
+            self.row = self.col = -1
     
 app = Sudoku()
 app.master.title("Sudoku")
