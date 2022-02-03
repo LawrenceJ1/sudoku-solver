@@ -3,10 +3,16 @@ import tkinter as tk
 
 class Sudoku(tk.Frame):    
     def __init__(self, master=None):
+        #declaring variables
         self.row = self.col = -1
         self.margin = 20
         self.side = 60 
         self.width = self.height = self.margin * 2 + self.side * 9
+        self.nums = set()
+        for i in range(1, 10):
+            self.nums.add(str(i))
+        self.board = [[".", ".", ".", ".", ".", ".", ".", ".", "."] for i in range(9)]
+            
         tk.Frame.__init__(self, master)
         self.grid()
         self.createWidgets()
@@ -35,6 +41,11 @@ class Sudoku(tk.Frame):
                 self.col = col
         else:
             self.row = self.col = -1
+    
+    def _key(self, event):
+        if self.row != 1 and self.col != 1 and event.char in self.nums:
+            self.row = self.col = -1
+            self.board[self.row][self.col] = event.char
     
 app = Sudoku()
 app.master.title("Sudoku")
