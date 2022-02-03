@@ -1,5 +1,5 @@
 # sudoku-solver
-[](sudoku_board.jpg)
+![](./sudoku_board.jpg)
 ## Description
 Tkinter is used to create an interactive sudoku board which allows the user to play sudoku on it. 
 There are two buttons, one to clear the board and another that solves the board for the user. The 
