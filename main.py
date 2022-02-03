@@ -8,9 +8,12 @@ class Application(tk.Frame):
         self.createWidgets()
         
     def createWidgets(self):
-        self.quitButton = tk.Button(self, text="Quit", command=self.quit)
-        self.quitButton.grid()
-
+        self.pack(fill=tk.BOTH, expand=1)
+        self.canvas = tk.Canvas(self)
+        self.canvas.pack(fill=tk.BOTH, side=tk.TOP)
+        self.canvas.grid()
+        
+    
 app = Application()
-app.master.title("Sample application")
+app.master.title("Sudoku")
 app.mainloop()
