@@ -1,5 +1,6 @@
 from collections import deque
 from typing import List
+
 class Solution:
     def solve_sudoku(self, board: List[List[str]]) -> None:
         """Solves a sudoku board."""
