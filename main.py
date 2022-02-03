@@ -22,6 +22,7 @@ class Sudoku(tk.Frame):
         self.canvas.pack(fill=tk.BOTH, side=tk.TOP)
         
         self._drawGrid()
+        self._drawSudoku()
         
         self.canvas.bind("<Button-1>", self._click)
         self.canvas.bind("<Key>", self._key)
@@ -32,6 +33,14 @@ class Sudoku(tk.Frame):
             self.canvas.create_line(self.margin+i*(self.side), self.margin, self.margin+i*(self.side), self.height-self.margin, fill=color)
             self.canvas.create_line(self.margin, self.margin+i*(self.side), self.width-self.margin, self.margin+i*(self.side), fill=color)
     
+    def _drawSudoku(self):
+        for i in range(9):
+            for j in range(9):
+                if self.board[i][j] != ".":
+                    x = self.margin+j*self.side+self.side/2
+                    y = self.margin+i*self.side+self.side/2
+                    self.canvas.create_text(x, y, text=self.board[i][j], fill="black")
+                    
     def _click(self, event):
         if (self.margin < event.x < self.width - self.margin and self.margin < event.y < self.height - self.margin):
             row, col = int((event.y - self.margin) / self.side), int((event.x - self.margin) / self.side)
@@ -47,6 +56,7 @@ class Sudoku(tk.Frame):
         if self.row > 0 and self.col > 0 and event.char in self.nums:
             self.board[self.row][self.col] = event.char
             self.row = self.col = -1
+            self._drawSudoku()
     
 app = Sudoku()
 app.master.title("Sudoku")
