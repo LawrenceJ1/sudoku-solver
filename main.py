@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import tkinter as tk
+from solver import Solution
 
 class Sudoku(tk.Frame):    
     def __init__(self, master=None):
@@ -12,6 +13,7 @@ class Sudoku(tk.Frame):
         for i in range(1, 10):
             self.nums.add(str(i))
         self.board = [[".", ".", ".", ".", ".", ".", ".", ".", "."] for i in range(9)]
+        self.solver = Solution()
         
         tk.Frame.__init__(self, master)
         self.grid()
@@ -20,6 +22,8 @@ class Sudoku(tk.Frame):
     def createWidgets(self):
         self.canvas = tk.Canvas(self, width=self.width, height=self.height)
         self.canvas.pack(fill=tk.BOTH, side=tk.TOP)
+        self.solve_button = tk.Button(self, text="Solve", command=self._solve)
+        self.solve_button.pack(fill=tk.BOTH, side=tk.BOTTOM)
         
         self._drawGrid()
         self._drawSudoku()
@@ -34,12 +38,13 @@ class Sudoku(tk.Frame):
             self.canvas.create_line(self.margin, self.margin+i*(self.side), self.width-self.margin, self.margin+i*(self.side), fill=color)
     
     def _drawSudoku(self):
+        self.canvas.delete("nums")
         for i in range(9):
             for j in range(9):
                 if self.board[i][j] != ".":
                     x = self.margin+j*self.side+self.side/2
                     y = self.margin+i*self.side+self.side/2
-                    self.canvas.create_text(x, y, text=self.board[i][j], fill="black")
+                    self.canvas.create_text(x, y, text=self.board[i][j], tags="nums", fill="black")
                     
     def _click(self, event):
         if (self.margin < event.x < self.width - self.margin and self.margin < event.y < self.height - self.margin):
@@ -54,11 +59,14 @@ class Sudoku(tk.Frame):
             self.row = self.col = -1
     
     def _key(self, event):
-        if self.row > 0 and self.col > 0 and event.char in self.nums:
+        if self.row != -1 and self.col != -1 and event.char in self.nums:
             self.board[self.row][self.col] = event.char
-            self.row = self.col = -1
             self._drawSudoku()
     
+    def _solve(self):
+        self.solver.solve_sudoku(self.board)
+        self._drawSudoku()
+        
 app = Sudoku()
 app.master.title("Sudoku")
 app.mainloop()
