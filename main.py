@@ -1,6 +1,6 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup as soup
-from my_leetcode_solution import Solution
+from solver import Solution
 
 #initialization
 driver = webdriver.Chrome()
